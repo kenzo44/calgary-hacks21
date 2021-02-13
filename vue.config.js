@@ -1,14 +1,21 @@
+const path = require('path');
+
+function resolveSrc(_path) {
+  return path.join(__dirname, _path);
+}
+// vue.config.js
 module.exports = {
-  lintOnSave: false,
-  runtimeCompiler: true,
+  lintOnSave: true,
   configureWebpack: {
-    //Necessary to run npm link https://webpack.js.org/configuration/resolve/#resolve-symlinks
+    // Set up all the aliases we use in our app.
     resolve: {
-       symlinks: false
+      alias: {
+        assets: resolveSrc('src/assets')
+      }
     }
   },
-  transpileDependencies: [
-    '@coreui/utils',
-    '@coreui/vue'
-  ]
-}
+  css: {
+    // Enable CSS source maps.
+    sourceMap: process.env.NODE_ENV !== 'production'
+  }
+};

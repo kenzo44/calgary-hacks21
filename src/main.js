@@ -1,22 +1,31 @@
-import 'core-js/stable'
-import Vue from 'vue'
-import App from './App'
-import router from './router'
-import CoreuiVue from '@coreui/vue'
-import { iconsSet as icons } from './assets/icons/icons.js'
-import store from './store'
+/*!
 
-Vue.config.performance = true
-Vue.use(CoreuiVue)
-Vue.prototype.$log = console.log.bind(console)
+=========================================================
+* BootstrapVue Argon Dashboard - v1.0.0
+=========================================================
 
+* Product Page: https://www.creative-tim.com/product/bootstrap-vue-argon-dashboard
+* Copyright 2020 Creative Tim (https://www.creative-tim.com)
+
+* Coded by www.creative-tim.com
+
+=========================================================
+
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+*/
+import Vue from 'vue';
+import DashboardPlugin from './plugins/dashboard-plugin';
+import App from './App.vue';
+
+// router setup
+import router from './routes/router';
+// plugin setup
+Vue.use(DashboardPlugin);
+
+/* eslint-disable no-new */
 new Vue({
   el: '#app',
-  router,
-  store,
-  icons,
-  template: '<App/>',
-  components: {
-    App
-  }
-})
+  render: h => h(App),
+  router
+});
