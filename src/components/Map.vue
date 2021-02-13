@@ -48,6 +48,7 @@ export default {
       const markers = locations
         .map((location) => {
             const marker = new google.maps.Marker({ ...location, map });
+            marker.setIcon();
             marker.addListener('click', () => markerClickHandler(marker));
 
             return marker;
