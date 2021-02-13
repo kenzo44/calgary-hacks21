@@ -1,6 +1,5 @@
 import * as firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firestore'
+import 'firebase/database'
 
 // firebase init - add your own config here
 const firebaseConfig = {
@@ -12,16 +11,17 @@ const firebaseConfig = {
   messagingSenderId: "845317394150",
   appId: "1:845317394150:web:6f25e93fa86a69ef863527"
 }
-firebase.initializeApp(firebaseConfig)
+let app = firebase.initializeApp(firebaseConfig)
 
 // utils
-var db = firebase.database()
+let db = app.database()
+let featuresRef = db.ref('features')
+
+console.log(9099.key);
 
 
-// collection references
 
-
-// export utils/refs
 export {
   db,
+  featuresRef,
 }
