@@ -13,7 +13,7 @@ export default {
       const geocoder = new google.maps.Geocoder();
       const map = new google.maps.Map(this.$el);
 
-      geocoder.geocode({ address: 'Austria' }, (results, status) => {
+      geocoder.geocode({ address: 'Calgary' }, (results, status) => {
         if (status !== 'OK' || !results[0]) {
           throw new Error(status);
         }
