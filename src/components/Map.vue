@@ -60,6 +60,9 @@ const locations = [
 
 export default {
   name: 'Map',
+  firebase: {
+    features: featuresRef
+  },
   async mounted() {
     try {
       const google = await gmapsInit();

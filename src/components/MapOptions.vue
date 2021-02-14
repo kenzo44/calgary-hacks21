@@ -26,9 +26,6 @@
 
 export default {
   name: 'MapOptions',
-  firebase:{
-    features: featuresRef
-  },
   data: () => ({
     type: 'active'
   }),
