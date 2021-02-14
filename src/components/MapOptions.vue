@@ -4,7 +4,7 @@
     <label>With Watch Tower, preview crimes that have occured and are occuring in Calgary all in realtime and gain a better understanding of your community!</label><br/><br/>
     <br/>
     <label>YYC Watchtower is powered by Google Cloud.</label><br/><br/><br/>
-    <label class="date">Last updated: {{ timestamp }}</label>
+    <label class="date"><i class="fas fa-spinner fa-pulse"></i> Last updated: {{ timestamp }}</label>
 
   </fieldset>
 
@@ -43,11 +43,10 @@ export default {
   top: 120px;
   left: 10px;
   padding: 20px;
-  background: rgb(255,255,255,0.8);
+  background: rgb(255,255,255);
   border-radius: 5px;
   font-size: 18px;
-  border-radius: 5px;
-  box-shadow: 4px 7px 8px #888888;
+  border-radius: 10px;
 }
 hr{
   border: 1px solid #333;
@@ -64,7 +63,7 @@ input {
   margin-bottom: 10px;
 }
 .map-options legend {
-  background: rgb(255,255,255,0.8);
+  background: rgb(255,255,255);
   font-weight: bold;
   padding: 10px 2px;
   border-radius: 10px;
