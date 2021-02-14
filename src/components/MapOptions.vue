@@ -1,6 +1,6 @@
 <template>
   <fieldset class="map-options">
-    <legend><i class="fas fa-eye"></i> YYC Watch Tower</legend>
+    <legend><i class="fas fa-eye"></i> YYC Watchtower</legend>
     <label>With Watch Tower, preview crimes that have occured and are occuring in Calgary in realtime.</label><br/><br/>
     <label><input v-model="type" type="radio" id="active" name="type" value="active" /> COVID-19 Cases</label><br />
     <label><input v-model="type" type="radio" id="confirmed" name="type" value="confirmed" /> Crime</label><br />
