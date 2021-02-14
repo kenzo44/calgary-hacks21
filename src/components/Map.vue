@@ -87,7 +87,7 @@ export default {
               ...location,
               map,
               title: location.id,
-              icon: "../assets/thieficon.png"
+              icon: '../assets/logo.png'
             });
 
             marker.setIcon();
