@@ -23,42 +23,29 @@ let featuresRef = db.ref('features')
 
 console.log(featuresRef);
 
+
 var ref = Firebase.database().ref("features/9099/properties");
 
-const locations = [
-  {
-    position: {
-      lat: 48.160910,
-      lng: 16.383330,
-    },
-  },
-  {
-    position: {
-      lat: 48.174270,
-      lng: 16.329620,
-    },
-  },
-];
+const locations = [];
 
 async function getData() {
   var query = Firebase.database().ref("features");
-  query.once("value")
+  await query.once("value") // << Await this call here
     .then(function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
         var childLat = childSnapshot.child("properties/lat").val();
         var childLong = childSnapshot.child("properties/long").val();
-        var position = {
-            lat: childLat,
-            lng: childLong,
-        };
-        locations.push(position);
-    });
-    console.log(locations.length);
+        var pos = {
+          position: {
+            lat: parseFloat(childLat),
+            lng: parseFloat(childLong),
+          },
+        }
+        locations.push(pos);
+      });
+      console.log(locations.length)
   });
-  return await Promise.resolve("Hello");
 }
-
-getData().then(console.log)
 
 console.log(locations.length);
 
@@ -80,6 +67,8 @@ export default {
   async mounted() {
     try {
       const google = await gmapsInit();
+      await getData();
+      console.log(locations[0]);
       const geocoder = new google.maps.Geocoder();
       const map = new google.maps.Map(this.$el);
 
@@ -93,7 +82,7 @@ export default {
       });
 
       const markerClickHandler = (marker) => {
-        map.setZoom(13);
+        map.setZoom(3);
         map.setCenter(marker.getPosition());
       };
 
@@ -110,7 +99,7 @@ export default {
           imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
           });
 
-    } catch (error) {
+        } catch (error) {
       console.error(error);
     }
   },
