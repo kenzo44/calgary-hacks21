@@ -3,7 +3,9 @@
     <legend><i class="fas fa-eye"></i> YYC Watchtower</legend>
     <label>With Watch Tower, preview crimes that have occured and are occuring in Calgary all in realtime and gain a better understanding of your community!</label><br/><br/>
     <br/>
-    <label>YYC Watchtower is powered by Google Cloud.</label>
+    <label>YYC Watchtower is powered by Google Cloud.</label><br/><br/><br/>
+    <label class="date">Last updated: {{ timestamp }}</label>
+
   </fieldset>
 
 </template>
@@ -13,11 +15,21 @@
 export default {
   name: 'MapOptions',
   data: () => ({
-    type: 'active'
+    type: 'active',
+    timestamp: ""
   }),
-  watch: {
-
-  }
+   created() {
+                setInterval(this.getNow, 1000);
+            },
+            methods: {
+                getNow: function() {
+                    const today = new Date();
+                    const date = (today.getMonth()+1)+'-'+today.getDate()+'-'+today.getFullYear();
+                    const dateTime = date;
+                    this.timestamp = dateTime;
+                }
+            }
+  
 }
 </script>
 
@@ -39,6 +51,9 @@ export default {
 }
 hr{
   border: 1px solid #333;
+}
+.date{
+  font-size: 15px;
 }
 legend{
   font-size: 23px;
