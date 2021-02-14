@@ -166,10 +166,9 @@ export default {
               ...location,
               map,
               title: location.id,
-              icon: '../assets/logo.png'
             });
 
-            marker.setIcon();
+            //marker.setIcon('../assets/thieficon.png');
             marker.addListener('click', () => markerClickHandler(marker));
 
             return marker;
@@ -177,6 +176,7 @@ export default {
 
         new MarkerClusterer(map, markers, {
           imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
+          maxZoom: 12,
         });
 
         } catch (error) {
