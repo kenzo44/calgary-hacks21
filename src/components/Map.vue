@@ -7,6 +7,24 @@ import MarkerClusterer from '@google/markerclusterer';
 
 import gmapsInit from '../utils/gmaps';
 
+import Firebase from 'firebase'
+let config={
+  apiKey: "AIzaSyDtCUmTAoiHi6CAWHV4aNy6T8JT6KP1l50",
+    authDomain: "calgarycrime-9c9d0.firebaseapp.com",
+    databaseURL: "https://calgarycrime-9c9d0-default-rtdb.firebaseio.com",
+    projectId: "calgarycrime-9c9d0",
+    storageBucket: "calgarycrime-9c9d0.appspot.com",
+    messagingSenderId: "845317394150",
+    appId: "1:845317394150:web:6f25e93fa86a69ef863527"
+}
+let app = Firebase.initializeApp(config)
+let db = app.database()
+let featuresRef = db.ref('features')
+
+console.log(featuresRef);
+
+var ref = Firebase.database().ref("features/9099/properties");
+
 const locations = [
   {
     position: {
@@ -20,11 +38,45 @@ const locations = [
       lng: 16.329620,
     },
   },
-  // ...
 ];
+
+async function getData() {
+  var query = Firebase.database().ref("features");
+  query.once("value")
+    .then(function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        var childLat = childSnapshot.child("properties/lat").val();
+        var childLong = childSnapshot.child("properties/long").val();
+        var position = {
+            lat: childLat,
+            lng: childLong,
+        };
+        locations.push(position);
+    });
+    console.log(locations.length);
+  });
+  return await Promise.resolve("Hello");
+}
+
+getData().then(console.log)
+
+console.log(locations.length);
+
+ref.once("value")
+  .then(function(snapshot) {
+    var id = snapshot.child("id").val();
+    var lat = snapshot.child("lat").val();
+    var long = snapshot.child("long").val();
+    console.log(id);
+    console.log(lat);
+    console.log(long);
+});
 
 export default {
   name: 'Map',
+  firebase: {
+    features: featuresRef
+  },
   async mounted() {
     try {
       const google = await gmapsInit();
