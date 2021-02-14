@@ -23,9 +23,6 @@ let featuresRef = db.ref('features')
 
 console.log(featuresRef);
 
-
-var ref = Firebase.database().ref("features/9099/properties");
-
 const locations = [];
 
 async function getData() {
@@ -35,11 +32,13 @@ async function getData() {
       snapshot.forEach(function(childSnapshot) {
         var childLat = childSnapshot.child("properties/lat").val();
         var childLong = childSnapshot.child("properties/long").val();
+        var childID = childSnapshot.child("properties/id").val();
         var pos = {
           position: {
             lat: parseFloat(childLat),
             lng: parseFloat(childLong),
           },
+          id: String(childID),
         }
         locations.push(pos);
       });
@@ -48,16 +47,6 @@ async function getData() {
 }
 
 console.log(locations.length);
-
-ref.once("value")
-  .then(function(snapshot) {
-    var id = snapshot.child("id").val();
-    var lat = snapshot.child("lat").val();
-    var long = snapshot.child("long").val();
-    console.log(id);
-    console.log(lat);
-    console.log(long);
-});
 
 export default {
   name: 'Map',
@@ -70,7 +59,88 @@ export default {
       await getData();
       console.log(locations[0]);
       const geocoder = new google.maps.Geocoder();
-      const map = new google.maps.Map(this.$el);
+      const map = new google.maps.Map(this.$el, {
+        styles: [
+        { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
+        { elementType: "labels.text.stroke", stylers: [{ color: "#242f3e" }] },
+        { elementType: "labels.text.fill", stylers: [{ color: "#746855" }] },
+        {
+          featureType: "administrative.locality",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#d59563" }],
+        },
+        {
+          featureType: "poi",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#d59563" }],
+        },
+        {
+          featureType: "poi.park",
+          elementType: "geometry",
+          stylers: [{ color: "#263c3f" }],
+        },
+        {
+          featureType: "poi.park",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#6b9a76" }],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry",
+          stylers: [{ color: "#38414e" }],
+        },
+        {
+          featureType: "road",
+          elementType: "geometry.stroke",
+          stylers: [{ color: "#212a37" }],
+        },
+        {
+          featureType: "road",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#9ca5b3" }],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "geometry",
+          stylers: [{ color: "#746855" }],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "geometry.stroke",
+          stylers: [{ color: "#1f2835" }],
+        },
+        {
+          featureType: "road.highway",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#f3d19c" }],
+        },
+        {
+          featureType: "transit",
+          elementType: "geometry",
+          stylers: [{ color: "#2f3948" }],
+        },
+        {
+          featureType: "transit.station",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#d59563" }],
+        },
+        {
+          featureType: "water",
+          elementType: "geometry",
+          stylers: [{ color: "#17263c" }],
+        },
+        {
+          featureType: "water",
+          elementType: "labels.text.fill",
+          stylers: [{ color: "#515c6d" }],
+        },
+        {
+          featureType: "water",
+          elementType: "labels.text.stroke",
+          stylers: [{ color: "#17263c" }],
+        },
+      ],
+    });
 
       geocoder.geocode({ address: 'Calgary' }, (results, status) => {
         if (status !== 'OK' || !results[0]) {
@@ -81,14 +151,24 @@ export default {
         map.fitBounds(results[0].geometry.viewport);
       });
 
+      const infowindow = new google.maps.InfoWindow({
+        title: '',
+      });
+
       const markerClickHandler = (marker) => {
-        map.setZoom(3);
-        map.setCenter(marker.getPosition());
+        infowindow.setContent(marker.title);
+        infowindow.open(map, marker);
       };
 
       const markers = locations
         .map((location) => {
-            const marker = new google.maps.Marker({ ...location, map });
+            const marker = new google.maps.Marker({
+              ...location,
+              map,
+              title: location.id,
+              icon: '../assets/logo.png'
+            });
+
             marker.setIcon();
             marker.addListener('click', () => markerClickHandler(marker));
 
@@ -97,7 +177,7 @@ export default {
 
         new MarkerClusterer(map, markers, {
           imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
-          });
+        });
 
         } catch (error) {
       console.error(error);
