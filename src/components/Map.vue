@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import MarkerClusterer from '@google/markerclusterer';
+import MarkerClusterer from '@googlemaps/markerclustererplus';
 
 import gmapsInit from '../utils/gmaps';
 
