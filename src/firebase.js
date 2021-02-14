@@ -11,17 +11,12 @@ const firebaseConfig = {
   messagingSenderId: "845317394150",
   appId: "1:845317394150:web:6f25e93fa86a69ef863527"
 }
-let app = firebase.initializeApp(firebaseConfig)
+
+
+
+const app = firebase.initializeApp(firebaseConfig)
 
 // utils
 let db = app.database()
-let featuresRef = db.ref('features')
 
-console.log(9099.key);
-
-
-
-export {
-  db,
-  featuresRef,
-}
+export default db

@@ -7,6 +7,10 @@ import MarkerClusterer from '@google/markerclusterer';
 
 import gmapsInit from '../utils/gmaps';
 
+import db from '../firebase';
+
+console.log(db);
+
 const locations = [
   {
     position: {
