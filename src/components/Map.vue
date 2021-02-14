@@ -23,9 +23,6 @@ let featuresRef = db.ref('features')
 
 console.log(featuresRef);
 
-
-var ref = Firebase.database().ref("features/9099/properties");
-
 const locations = [];
 
 async function getData() {
@@ -35,11 +32,13 @@ async function getData() {
       snapshot.forEach(function(childSnapshot) {
         var childLat = childSnapshot.child("properties/lat").val();
         var childLong = childSnapshot.child("properties/long").val();
+        var childID = childSnapshot.child("properties/id").val();
         var pos = {
           position: {
             lat: parseFloat(childLat),
             lng: parseFloat(childLong),
           },
+          id: String(childID),
         }
         locations.push(pos);
       });
@@ -48,16 +47,6 @@ async function getData() {
 }
 
 console.log(locations.length);
-
-ref.once("value")
-  .then(function(snapshot) {
-    var id = snapshot.child("id").val();
-    var lat = snapshot.child("lat").val();
-    var long = snapshot.child("long").val();
-    console.log(id);
-    console.log(lat);
-    console.log(long);
-});
 
 export default {
   name: 'Map',
@@ -81,14 +70,23 @@ export default {
         map.fitBounds(results[0].geometry.viewport);
       });
 
+      const infowindow = new google.maps.InfoWindow({
+        title: '',
+      });
+
       const markerClickHandler = (marker) => {
         map.setZoom(3);
         map.setCenter(marker.getPosition());
+        infowindow.open(map, marker);
       };
 
       const markers = locations
         .map((location) => {
-            const marker = new google.maps.Marker({ ...location, map });
+            const marker = new google.maps.Marker({
+              ...location,
+              map,
+              title: location.id
+            });
             marker.setIcon();
             marker.addListener('click', () => markerClickHandler(marker));
 
