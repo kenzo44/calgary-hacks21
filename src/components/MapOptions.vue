@@ -1,11 +1,6 @@
 <template>
   <fieldset class="map-options">
     <legend><i class="fas fa-eye"></i> YYC Watchtower</legend>
-<<<<<<< HEAD
-    <label>With Watch Tower, preview crimes that have occurred in Calgary from 2017 - Present all in real-time and gain a better understanding of your community!</label><br/><br/>
-    <br/>
-    <label>YYC Watchtower is powered by Google Cloud.</label><br/><br/><br/>
-=======
     <label>With Watch Tower, preview crimes that have occurred in Calgary from 2019 until today all in real-time and gain a better understanding of your community!</label><br/><br/>
     <i class="fas fa-search-minus"></i> to see crime hotspots in a cluster<br/><br/><i class="fas fa-search-plus"></i> to break down a cluster and access information on each case by selecting it.<br/>
     <div class="lengendary"><br/>
@@ -17,7 +12,6 @@
         <li><i class="h fas fa-thumbtack"></i> 1000+ Cases</li>
         </ul>
     </div><br/>
->>>>>>> 74bc669d52d85a4a1f34830c5cdbe3170a76b133
     <label class="boast"><i class="fas fa-spinner fa-pulse"></i> Loading 46,428 cases</label><br/><br/>
     <label class="date"><i class="far fa-clock"></i> Last updated: {{ timestamp }}</label><br/>
 
