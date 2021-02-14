@@ -41,15 +41,21 @@ const locations = [
 ];
 
 async function getData() {
-var query = Firebase.database().ref("features");
-query.once("value")
-  .then(function(snapshot) {
-    snapshot.forEach(function(childSnapshot) {
-      var childLat = childSnapshot.child("properties/lat").val();
-      console.log(childLat);
+  var query = Firebase.database().ref("features");
+  query.once("value")
+    .then(function(snapshot) {
+      snapshot.forEach(function(childSnapshot) {
+        var childLat = childSnapshot.child("properties/lat").val();
+        var childLong = childSnapshot.child("properties/long").val();
+        var position = {
+            lat: childLat,
+            lng: childLong,
+        };
+        locations.push(position);
+    });
+    console.log(locations.length);
   });
-});
-  return greeting = await Promise.resolve("Hello");
+  return await Promise.resolve("Hello");
 }
 
 getData().then(console.log)
@@ -85,6 +91,20 @@ export default {
         map.setCenter(results[0].geometry.location);
         map.fitBounds(results[0].geometry.viewport);
       });
+
+      const markerClickHandler = (marker) => {
+        map.setZoom(13);
+        map.setCenter(marker.getPosition());
+      };
+
+      const markers = locations
+        .map((location) => {
+            const marker = new google.maps.Marker({ ...location, map });
+            marker.setIcon();
+            marker.addListener('click', () => markerClickHandler(marker));
+
+            return marker;
+          });
 
         new MarkerClusterer(map, markers, {
           imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
