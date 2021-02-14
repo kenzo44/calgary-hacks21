@@ -42,7 +42,7 @@ const locations = [
 
 async function getData() {
   var query = Firebase.database().ref("features");
-  query.once("value")
+  await query.once("value") // << Await this call here
     .then(function(snapshot) {
       snapshot.forEach(function(childSnapshot) {
         var childLat = childSnapshot.child("properties/lat").val();
@@ -52,13 +52,10 @@ async function getData() {
             lng: childLong,
         };
         locations.push(position);
-    });
-    console.log(locations.length);
+      });
+      console.log(locations.length)
   });
-  return await Promise.resolve("Hello");
 }
-
-getData().then(console.log)
 
 console.log(locations.length);
 
@@ -80,6 +77,7 @@ export default {
   async mounted() {
     try {
       const google = await gmapsInit();
+      await getData();
       const geocoder = new google.maps.Geocoder();
       const map = new google.maps.Map(this.$el);
 
@@ -110,7 +108,7 @@ export default {
           imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
           });
 
-    } catch (error) {
+        } catch (error) {
       console.error(error);
     }
   },
