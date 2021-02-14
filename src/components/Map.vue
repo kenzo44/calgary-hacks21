@@ -50,7 +50,7 @@ query.once("value")
   });
 });
   return greeting = await Promise.resolve("Hello");
-};
+}
 
 getData().then(console.log)
 
