@@ -1,11 +1,9 @@
 <template>
   <fieldset class="map-options">
     <legend><i class="fas fa-eye"></i> YYC Watchtower</legend>
-    <label>With Watch Tower, preview crimes that have occured and are occuring in Calgary in realtime.</label><br/><br/>
-    <label><input v-model="type" type="radio" id="active" name="type" value="active" /> COVID-19 Cases</label><br />
-    <label><input v-model="type" type="radio" id="confirmed" name="type" value="confirmed" /> Crime</label><br />
-    <label><input v-model="type" type="radio" id="recovered" name="type" value="recovered" /> Hospitals</label><br />
-    <label><input v-model="type" type="radio" id="deaths" name="type" value="deaths" /> Schools</label>
+    <label>With Watch Tower, preview crimes that have occured and are occuring in Calgary all in realtime and gain a better understanding of your community!</label><br/><br/>
+    <br/>
+    <label>YYC Watchtower is powered by Google Cloud.</label>
   </fieldset>
 
 </template>
@@ -29,7 +27,7 @@ export default {
   border: none;
   font-family: 'Roboto', sans-serif;
   position: fixed;
-  width: 220px;
+  width: 240px;
   top: 120px;
   left: 10px;
   padding: 20px;
@@ -37,6 +35,7 @@ export default {
   border-radius: 5px;
   font-size: 18px;
   border-radius: 5px;
+  box-shadow: 4px 7px 8px #888888;
 }
 hr{
   border: 1px solid #333;
@@ -50,7 +49,7 @@ input {
   margin-bottom: 10px;
 }
 .map-options legend {
-  background: white;
+  background: rgb(255,255,255,0.8);
   font-weight: bold;
   padding: 10px 2px;
   border-radius: 10px;
