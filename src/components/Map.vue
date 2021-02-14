@@ -25,23 +25,6 @@ console.log(featuresRef);
 
 var ref = Firebase.database().ref("features/9099/properties");
 
-var ref1 = Firebase.database().ref("features");
-ref1.once("value")
-  .then(function(snapshot) {
-    var numChild = snapshot.numChildren();
-    console.log(numChild);
-});
-
-ref.once("value")
-  .then(function(snapshot) {
-    var id = snapshot.child("id").val();
-    var lat = snapshot.child("lat").val();
-    var long = snapshot.child("long").val();
-    console.log(id);
-    console.log(lat);
-    console.log(long);
-  });
-
 const locations = [
   {
     position: {
@@ -55,8 +38,33 @@ const locations = [
       lng: 16.329620,
     },
   },
-  // ...
 ];
+
+async function getData() {
+var query = Firebase.database().ref("features");
+query.once("value")
+  .then(function(snapshot) {
+    snapshot.forEach(function(childSnapshot) {
+      var childLat = childSnapshot.child("properties/lat").val();
+      console.log(childLat);
+  });
+});
+  return greeting = await Promise.resolve("Hello");
+};
+
+getData().then(console.log)
+
+console.log(locations.length);
+
+ref.once("value")
+  .then(function(snapshot) {
+    var id = snapshot.child("id").val();
+    var lat = snapshot.child("lat").val();
+    var long = snapshot.child("long").val();
+    console.log(id);
+    console.log(lat);
+    console.log(long);
+});
 
 export default {
   name: 'Map',
@@ -77,20 +85,6 @@ export default {
         map.setCenter(results[0].geometry.location);
         map.fitBounds(results[0].geometry.viewport);
       });
-
-      const markerClickHandler = (marker) => {
-        map.setZoom(13);
-        map.setCenter(marker.getPosition());
-      };
-
-      const markers = locations
-        .map((location) => {
-            const marker = new google.maps.Marker({ ...location, map });
-            marker.setIcon();
-            marker.addListener('click', () => markerClickHandler(marker));
-
-            return marker;
-          });
 
         new MarkerClusterer(map, markers, {
           imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
