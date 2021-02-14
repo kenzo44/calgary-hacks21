@@ -1,7 +1,7 @@
 <template>
   <fieldset class="map-options">
     <legend><i class="fas fa-eye"></i> YYC Watchtower</legend>
-    <label>With Watch Tower, preview crimes that have occurred in Calgary from 2019 until today all in real-time and gain a better understanding of your community!</label><br/><br/>
+    <label>With Watch Tower, preview crimes that have occurred in Calgary from 2017 - Present all in real-time and gain a better understanding of your community!</label><br/><br/>
     <br/>
     <label>YYC Watchtower is powered by Google Cloud.</label><br/><br/><br/>
     <label class="boast"><i class="fas fa-spinner fa-pulse"></i> Loading 46,428 cases</label><br/><br/>
@@ -30,7 +30,7 @@ export default {
                     this.timestamp = dateTime;
                 }
             }
-  
+
 }
 </script>
 

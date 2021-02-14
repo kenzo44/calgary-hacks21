@@ -69,6 +69,13 @@ export default {
           elementType: "labels.text.fill",
           stylers: [{ color: "#d59563" }],
         },
+        { featureType: "poi",
+          "stylers": [
+            {
+              "visibility": "off"
+            }
+          ]
+        },
         {
           featureType: "poi",
           elementType: "labels.text.fill",
@@ -168,7 +175,6 @@ export default {
               title: location.id,
             });
 
-            //marker.setIcon('../assets/thieficon.png');
             marker.addListener('click', () => markerClickHandler(marker));
 
             return marker;
@@ -176,7 +182,7 @@ export default {
 
         new MarkerClusterer(map, markers, {
           imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
-          maxZoom: 12,
+          maxZoom: 14,
         });
 
         } catch (error) {
