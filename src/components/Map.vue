@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import MarkerClusterer from '@google/markerclusterer';
+//import MarkerClusterer from '@google/markerclusterer';
 
 import gmapsInit from '../utils/gmaps';
 
@@ -75,8 +75,9 @@ export default {
       });
 
       const markerClickHandler = (marker) => {
-        map.setZoom(3);
+
         map.setCenter(marker.getPosition());
+        infowindow.setContent(marker.title);
         infowindow.open(map, marker);
       };
 
@@ -85,17 +86,21 @@ export default {
             const marker = new google.maps.Marker({
               ...location,
               map,
-              title: location.id
+              title: location.id,
+              icon: "../assets/thieficon.png"
             });
+
             marker.setIcon();
             marker.addListener('click', () => markerClickHandler(marker));
 
             return marker;
           });
 
-        new MarkerClusterer(map, markers, {
+        console.log(markers.legth);
+
+        /*new MarkerClusterer(map, markers, {
           imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
-          });
+        });*/
 
         } catch (error) {
       console.error(error);
